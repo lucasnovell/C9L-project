@@ -1,7 +1,12 @@
+import Input from "./input";
+
+import "./style.css"
+import "./reset.css"
+
 function App() {
   return (
     <div className="App">
-      <h1>Olá mundo</h1>
+      <Input></Input>
     </div>
   );
 }
