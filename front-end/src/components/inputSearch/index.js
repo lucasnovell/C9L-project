@@ -1,9 +1,9 @@
 import './style.css'
 
-function Input() {
+function InputSearch() {
   return (
       <input type="text" id="search" placeholder="Buscar produto"></input>
   );
 }
 
-export default Input;
+export default InputSearch;

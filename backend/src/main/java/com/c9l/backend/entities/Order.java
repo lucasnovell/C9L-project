@@ -3,23 +3,32 @@ package com.c9l.backend.entities;
 import java.math.BigDecimal;
 import java.time.Instant;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
-@NoArgsConstructor  
-@AllArgsConstructor 
+@Entity()
+@Table(name = "tb_oder")
 public class Order {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private Instant orderMoment;
 	private OrderStatus status;
+	@ManyToOne
+    @JoinColumn(name = "user_id")
 	private User user;
 	private BigDecimal totalValue;
 	
 	
-	
+	public Order() {
+		
+	}
 	
 	//Getters and Setter
 	public Long getId() {

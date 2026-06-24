@@ -1,4 +1,4 @@
-import Input from "./input";
+import InputSearch from "./components/inputSearch";
 
 import "./style.css"
 import "./reset.css"
@@ -6,7 +6,7 @@ import "./reset.css"
 function App() {
   return (
     <div className="App">
-      <Input></Input>
+      <InputSearch></InputSearch>
     </div>
   );
 }

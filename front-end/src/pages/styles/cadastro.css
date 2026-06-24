@@ -1,0 +1,17 @@
+.Cadastro{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    background-color: #fff;
+    width: 70vw;
+    max-width: 800px;
+    height: 60vh;
+    border-radius: 5%;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}

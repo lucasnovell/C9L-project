@@ -1,15 +1,25 @@
 package com.c9l.backend.entities;
 
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
-@NoArgsConstructor  
-@AllArgsConstructor 
+@Entity	 
+@Table(name = "tb_user")
 public class User {
-
+	
+	
+	public User() {
+		
+	}
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
 	private String email;
