@@ -1,17 +1,20 @@
-package com.c9l.backend.entities;
+package com.c9l.backend.dto;
 
 import java.math.BigDecimal;
 import java.time.Instant;
 
+import com.c9l.backend.entities.Order;
+import com.c9l.backend.entities.OrderStatus;
+import com.c9l.backend.entities.User;
+
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+
+
 
 @NoArgsConstructor  
 @AllArgsConstructor 
-public class Order {
-
+public class OrderDTO {
 	private Long id;
 	private Instant orderMoment;
 	private OrderStatus status;
@@ -19,49 +22,31 @@ public class Order {
 	private BigDecimal totalValue;
 	
 	
+	public OrderDTO(Order entity) {
+		id = entity.getId();
+		orderMoment = entity.getOrderMoment();
+		status = entity.getStatus();
+		user = entity.getUser();
+		totalValue = entity.getTotalValue();
+	}
 	
-	
-	//Getters and Setter
 	public Long getId() {
 		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
 	}
 	public Instant getOrderMoment() {
 		return orderMoment;
 	}
-	public void setOrderMoment(Instant orderMoment) {
-		this.orderMoment = orderMoment;
-	}
 	public OrderStatus getStatus() {
 		return status;
-	}
-	public void setStatus(OrderStatus status) {
-		this.status = status;
 	}
 	public User getUser() {
 		return user;
 	}
-	public void setUser(User user) {
-		this.user = user;
-	}
 	public BigDecimal getTotalValue() {
 		return totalValue;
 	}
-	public void setTotalValue(BigDecimal totalValue) {
-		this.totalValue = totalValue;
-	}
 	
-	
-
 	
 	
 	
 }
-
-
-
-
-
-

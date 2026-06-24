@@ -1,13 +1,17 @@
-package com.c9l.backend.entities;
+package com.c9l.backend.dto;
 
 import java.math.BigDecimal;
+
+import com.c9l.backend.entities.Order;
+import com.c9l.backend.entities.OrderItem;
+import com.c9l.backend.entities.Product;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor  
 @AllArgsConstructor 
-public class OrderItem {
+public class OrderItemDTO {
 
 	private Long id;
 	private Order order;
@@ -16,40 +20,30 @@ public class OrderItem {
 	private BigDecimal unitPrice;
 	
 	
+	public OrderItemDTO (OrderItem entity) {
+		id = entity.getId();
+		order = entity.getOrder();
+		product = entity.getProduct();
+		quantity = entity.getQuantity();
+		unitPrice = entity.getUnitPrice();
+				
+	}
 	
-	
-	//Getter and Setter
 	public Long getId() {
 		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
 	}
 	public Order getOrder() {
 		return order;
 	}
-	public void setOrder(Order order) {
-		this.order = order;
-	}
 	public Product getProduct() {
 		return product;
-	}
-	public void setProduct(Product product) {
-		this.product = product;
 	}
 	public Integer getQuantity() {
 		return quantity;
 	}
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
-	}
 	public BigDecimal getUnitPrice() {
 		return unitPrice;
 	}
-	public void setUnitPrice(BigDecimal unitPrice) {
-		this.unitPrice = unitPrice;
-	}
-	
 	
 	
 	
