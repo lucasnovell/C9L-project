@@ -5,8 +5,7 @@ import com.c9l.backend.entities.User;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor  
-@AllArgsConstructor 
+
 public class UserDTO {
 
 	private Long id;
@@ -22,6 +21,20 @@ public class UserDTO {
 		password = entity.getPassword();
 		
 	}
+	
+	
+	public UserDTO() {
+		
+	}
+
+	public UserDTO(Long id, String name, String email, String password) {
+		this.id = id;
+		this.name = name;
+		this.email = email;
+		this.password = password;
+	}
+
+
 
 
 	public Long getId() {
