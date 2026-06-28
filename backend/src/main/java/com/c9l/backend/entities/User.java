@@ -12,7 +12,7 @@ import jakarta.persistence.Table;
 
 @Entity	 
 @Table(name = "tb_user")
-public class User {
+public class User{
 	
 	
 	public User() {
@@ -31,9 +31,6 @@ public class User {
 	@Enumerated(EnumType.STRING)
 	private Role role;
 
-	
-	
-	
 	
 	//Getters and Setters
 	public Long getId() {
@@ -75,9 +72,7 @@ public class User {
 	public void setRole(Role role) {
 		this.role = role;
 	}
-	
 
-	
-			
+		
 	
 }
