@@ -1,6 +1,13 @@
 package com.c9l.backend.entities;
 
 
+import java.util.Collection;
+import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -12,7 +19,7 @@ import jakarta.persistence.Table;
 
 @Entity	 
 @Table(name = "tb_user")
-public class User{
+public class User implements UserDetails{
 	
 	
 	public User() {
@@ -71,6 +78,20 @@ public class User{
 
 	public void setRole(Role role) {
 		this.role = role;
+	}
+
+	// Methods user details
+	
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		if(this.role == Role.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
+		else return List.of(new SimpleGrantedAuthority("ROLE_CLIENT"));
+	}
+	
+
+	@Override
+	public String getUsername() {
+		return email;
 	}
 
 		
