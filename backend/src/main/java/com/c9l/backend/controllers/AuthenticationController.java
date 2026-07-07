@@ -9,7 +9,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.c9l.backend.config.TokenService;
+import com.c9l.backend.dto.LoginResponseDTO;
 import com.c9l.backend.dto.UserDTO;
+import com.c9l.backend.entities.User;
 
 import jakarta.validation.Valid;
 
@@ -19,13 +22,17 @@ public class AuthenticationController {
 	
 	@Autowired
 	private AuthenticationManager authenticationManager;
+	@Autowired
+	private TokenService tokenService;
 
 	@PostMapping("/login")
-	public ResponseEntity<UserDTO> login (@RequestBody @Valid UserDTO dto) {
+	public ResponseEntity login (@RequestBody @Valid UserDTO dto) {
 		var usernamePassword = new UsernamePasswordAuthenticationToken(dto.getEmail(), dto.getPassword());
 		var auth = this.authenticationManager.authenticate(usernamePassword);
 		
-		return ResponseEntity.ok().build();
+		var token = tokenService.generateToken((User)auth.getPrincipal());
+		
+		return ResponseEntity.ok(new LoginResponseDTO(token));
 	}
 	
 }
