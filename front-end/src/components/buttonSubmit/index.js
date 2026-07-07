@@ -1,8 +1,11 @@
+import { useNavigate } from "react-router-dom";
+
 import './style.css'
 
-function ButtonSubmit({children}) {
+function ButtonSubmit({children, page}) {
+  const navigate = useNavigate();
   return (
-      <button type="submit">{children}</button>
+      <button type="submit" onClick={() => navigate(page)}>{children}</button>
   );
 }
 
