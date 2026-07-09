@@ -2,9 +2,6 @@ package com.c9l.backend.dto;
 
 import com.c9l.backend.entities.User;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-
 
 public class UserDTO {
 

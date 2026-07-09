@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.c9l.backend.repositories.UserRepository;
+import com.c9l.backend.services.TokenService;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -70,6 +71,4 @@ public class SecurityFilter extends OncePerRequestFilter{
 	    return authHeader.substring(7);
 	}
 	
-	
-
 }
