@@ -1,7 +1,9 @@
 package com.c9l.backend.services;
 
-import java.util.List;
 
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +17,11 @@ public class ProductService {
 	@Autowired
 	private ProductRepository repository;
 	
-	public List<ProductDTO> findAll(){
-		List<Product> result = repository.findAll();
-		return result.stream().map(ProductDTO::new).toList();
+	public Page<ProductDTO> findAll(Pageable pageable) {
+
+	    Page<Product> page = repository.findAll(pageable);
+
+	    return page.map(ProductDTO::new);
 	}
 	
 }
