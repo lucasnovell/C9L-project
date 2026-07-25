@@ -15,6 +15,7 @@ import com.c9l.backend.dto.AuthenticationDTO;
 import com.c9l.backend.dto.LoginResponseDTO;
 import com.c9l.backend.dto.UserDTO;
 import com.c9l.backend.entities.User;
+import com.c9l.backend.services.AuthorizationService;
 import com.c9l.backend.services.TokenService;
 
 import jakarta.validation.Valid;
@@ -25,6 +26,9 @@ public class AuthenticationController {
 	
 	@Autowired
 	private AuthenticationManager authenticationManager;
+	
+	@Autowired
+	private AuthorizationService authService;
 	
 	@Autowired
 	private TokenService tokenService;
@@ -43,7 +47,7 @@ public class AuthenticationController {
 	@GetMapping("/me")
 	public ResponseEntity<UserDTO> me (Authentication authentication){
 		User user = (User) authentication.getPrincipal();
-		   return ResponseEntity.ok(new UserDTO(user));
+		   return ResponseEntity.ok(new UserDTO(user));		  
 	}
 	
 }
