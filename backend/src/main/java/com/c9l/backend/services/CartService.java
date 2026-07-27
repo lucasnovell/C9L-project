@@ -1,5 +1,6 @@
 package com.c9l.backend.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.c9l.backend.dto.AddCartItemDTO;
 import com.c9l.backend.dto.CartDTO;
+import com.c9l.backend.dto.CartItemDTO;
 import com.c9l.backend.entities.Cart;
 import com.c9l.backend.entities.CartItem;
 import com.c9l.backend.entities.Product;
@@ -34,10 +36,8 @@ public class CartService {
 
     @Transactional
     public CartDTO addItem(AddCartItemDTO dto) {
-
         
         User user = userService.getAuthenticatedUser();
-
         
         Cart cart = cartRepository.findByUser(user)
                 .orElseGet(() -> {
@@ -45,12 +45,10 @@ public class CartService {
                     newCart.setUser(user);
                     return cartRepository.save(newCart);
                 });
-
-        
+ 
         Product product = productRepository.findById(dto.getProductId())
                 .orElseThrow(() ->
-                        new RuntimeException("Produto não encontrado."));
-
+                        new RuntimeException("Product not found."));
         
         Optional<CartItem> optionalItem =
                 cartItemRepository.findByCartAndProduct(cart, product);
@@ -80,5 +78,24 @@ public class CartService {
 
         return new CartDTO(updatedCart);
     }
-
+    
+    public void deleteItem(Long id) {
+    	User user = userService.getAuthenticatedUser();
+    	
+    	CartItem item = cartItemRepository
+    			.findByIdAndCartUserId(id, user.getId())
+    			.orElseThrow(() -> new RuntimeException("Item not found"));
+    	
+    	cartItemRepository.delete(item);
+    			
+    }
+    
+    public CartDTO listCart() {
+    	User user = userService.getAuthenticatedUser();
+    	
+    	Cart cart = cartRepository.findByUser(user)
+    			.orElseThrow(() -> new RuntimeException("Cart not found"));
+    	
+    	return new CartDTO(cart);
+    }
 }

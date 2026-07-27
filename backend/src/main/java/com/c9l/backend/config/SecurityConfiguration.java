@@ -35,10 +35,12 @@ public class SecurityConfiguration {
     			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
     			.authorizeHttpRequests(authorize -> authorize
     					.requestMatchers("/h2-console/**").permitAll()
-    					.requestMatchers(HttpMethod.POST, "auth/login").permitAll()
-    					.requestMatchers(HttpMethod.POST, "user/register").permitAll()
+    					.requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+    					.requestMatchers(HttpMethod.POST, "/user/register").permitAll()
     					.requestMatchers(HttpMethod.POST, "/user").hasRole("ADMIN")
-    					.requestMatchers(HttpMethod.GET, "/product").permitAll()
+    					.requestMatchers(HttpMethod.DELETE, "/cart/{id}").authenticated()
+    					.requestMatchers(HttpMethod.GET, "/cart").authenticated()
+    					.requestMatchers(HttpMethod.GET, "/product").permitAll() 
     					.anyRequest().authenticated())   	
     			.addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
     			
