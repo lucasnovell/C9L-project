@@ -2,11 +2,13 @@ import { useState } from "react";
 import { register } from "../services/AuthService"
 import InputCadastro from "../components/inputCadastro"
 import ButtonSubmit from "../components/buttonSubmit"
+import { useNavigate } from "react-router-dom";
 
 
 import "./styles/cadastro.css"
 
 function Cadastro() {
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,6 +26,7 @@ function Cadastro() {
       const response = await register(user)
       console.log(response);
       alert("Usuário cadastrado com sucesso")
+      navigate("/login");
     }
     catch(error){
       console.error(error)
