@@ -2,6 +2,8 @@ package com.c9l.backend.entities;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity()
@@ -24,6 +27,9 @@ public class Order {
     @JoinColumn(name = "user_id")
 	private User user;
 	private BigDecimal totalValue;
+	
+	@OneToMany(mappedBy = "order")
+	private List<OrderItem> items = new ArrayList<>();
 	
 	
 	public Order() {
@@ -60,6 +66,14 @@ public class Order {
 	}
 	public void setTotalValue(BigDecimal totalValue) {
 		this.totalValue = totalValue;
+	}
+
+	public List<OrderItem> getItems() {
+		return items;
+	}
+
+	public void setItems(List<OrderItem> items) {
+		this.items = items;
 	}
 	
 	
