@@ -69,6 +69,7 @@ public class OrderService {
 			orderItem.setUnitPrice(cartItem.getProduct().getPrice());
 			
 			orderItemRepository.save(orderItem);
+			order.getItems().add(orderItem);
 			
 			total = total.add(orderItem.getUnitPrice()
 					.multiply(BigDecimal.valueOf(orderItem.getQuantity())));										
@@ -79,7 +80,9 @@ public class OrderService {
 		
 		cartItemRepository.deleteAll(cart.getItems());
 		
-		return new OrderDTO(order);
+		Order updatedOrder = orderRepository.findById(order.getId()).orElseThrow();
+		
+		return new OrderDTO(updatedOrder);
 	
 	}
 }

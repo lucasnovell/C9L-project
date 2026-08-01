@@ -2,10 +2,10 @@ package com.c9l.backend.dto;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.List;
 
 import com.c9l.backend.entities.Order;
 import com.c9l.backend.entities.OrderStatus;
-import com.c9l.backend.entities.User;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -18,16 +18,19 @@ public class OrderDTO {
 	private Long id;
 	private Instant orderMoment;
 	private OrderStatus status;
-	private User user;
+	private UserSummaryDTO user;
 	private BigDecimal totalValue;
-	
+	private List<OrderItemDTO> items;
 	
 	public OrderDTO(Order entity) {
 		id = entity.getId();
 		orderMoment = entity.getOrderMoment();
 		status = entity.getStatus();
-		user = entity.getUser();
+		user = new UserSummaryDTO(entity.getUser());
 		totalValue = entity.getTotalValue();
+		items = entity.getItems().stream()
+				.map(OrderItemDTO::new)
+				.toList();
 	}
 	
 	public Long getId() {
@@ -39,12 +42,20 @@ public class OrderDTO {
 	public OrderStatus getStatus() {
 		return status;
 	}
-	public User getUser() {
-		return user;
-	}
+
 	public BigDecimal getTotalValue() {
 		return totalValue;
 	}
+
+	public List<OrderItemDTO> getItems() {
+		return items;
+	}
+
+	public UserSummaryDTO getUser() {
+		return user;
+	}
+	
+	
 	
 	
 	

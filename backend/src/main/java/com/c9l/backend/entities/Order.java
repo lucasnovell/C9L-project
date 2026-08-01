@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -21,11 +23,16 @@ public class Order {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	private Instant orderMoment;
+	
+	@Enumerated(EnumType.STRING)
 	private OrderStatus status;
+	
 	@ManyToOne
     @JoinColumn(name = "user_id")
 	private User user;
+	
 	private BigDecimal totalValue;
 	
 	@OneToMany(mappedBy = "order")
