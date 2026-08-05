@@ -15,6 +15,7 @@ public class ProductDTO {
 	private String name;
 	private String description;
 	private BigDecimal price;
+	private String image;
 	
 	
 	public ProductDTO (Product entity) {
@@ -22,6 +23,7 @@ public class ProductDTO {
 		name = entity.getName();
 		description = entity.getDescription();
 		price  = entity.getPrice();
+		image = entity.getImage();
 	}
 	
 	
@@ -38,6 +40,10 @@ public class ProductDTO {
 	public BigDecimal getPrice() {
 		return price;
 	}
+	public String getImage() {
+		return image;
+	}
+	
 
 	
 	
