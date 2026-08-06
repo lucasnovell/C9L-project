@@ -1,0 +1,25 @@
+
+header {
+    height: 30vh;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+footer{
+    border: 1px solid green;
+    height: 10vh;
+}
+
+.home-products{
+    border: 1px solid;
+    padding: 2em;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1em;
+}
+
