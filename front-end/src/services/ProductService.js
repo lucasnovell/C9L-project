@@ -4,3 +4,4 @@ export async function getProductsInfo() {
     const products = productsJSON.content;
     return products;
 }
+
