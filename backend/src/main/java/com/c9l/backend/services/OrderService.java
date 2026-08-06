@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.time.Instant;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.c9l.backend.dto.OrderDTO;
@@ -37,7 +39,7 @@ public class OrderService {
 	
 	@Autowired
 	private CartItemRepository cartItemRepository;
-	
+
 	
 	@Transactional
 	public OrderDTO checkout() {
@@ -84,5 +86,14 @@ public class OrderService {
 		
 		return new OrderDTO(updatedOrder);
 	
+	}
+	
+	
+	public Page<OrderDTO> findAll (Pageable pageable){
+		User user = userService.getAuthenticatedUser();
+		
+		Page<Order> page = orderRepository.findByUser(user, pageable);
+		
+		return page.map(OrderDTO::new);
 	}
 }
