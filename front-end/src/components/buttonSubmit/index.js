@@ -2,9 +2,9 @@
 
 import './style.css'
 
-function ButtonSubmit({children, page, onClick}) {
+function ButtonSubmit({children}) {
   return (
-      <button type="submit" onClick={onClick}>{children}</button>
+      <button type="submit"> {children} </button>
   );
 }
 
