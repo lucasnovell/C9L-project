@@ -52,6 +52,10 @@ nav {
     align-items: center;
 }
 
+.cart-link{ 
+    text-decoration: none;
+}
+
 .cart{
     height: 50px;
     width: 50px;

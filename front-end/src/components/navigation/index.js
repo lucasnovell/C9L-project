@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import InputSearch from "../inputSearch";
 
 import './style.css'
@@ -17,7 +18,12 @@ function Navigation() {
           </div> 
           <div className="nav-right">
             <div className="user">user</div>
-            <div className="cart">cart</div>
+            <Link 
+            className="cart-link"
+            to={`/cart`}>
+              <div className="cart">cart</div>
+            </Link>
+            
           </div>
           
         </nav>

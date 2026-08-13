@@ -1,0 +1,144 @@
+.cart-body{
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.path{
+    width: 100vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em 2em;
+}
+
+.home-link{
+    text-decoration: none;
+    color: #000;
+}
+
+.total-top{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+    padding: 1em;
+    margin-bottom: 1em;
+}
+
+.total-top button{
+    background-color: #000;
+    width: 10em;
+    font-size: 1.2em;
+}
+
+hr{
+    width: 90%;
+    align-self: center;
+    border: 1px solid #000;
+}
+
+.products-checkout{
+    display: flex;
+    flex-direction: column;
+    gap: .8em;
+}
+
+.product-cart{
+    height: 150px;
+    display: flex;
+    width: 100%;
+}
+
+.products-checkout .img{
+    background-color: #000;
+    width: 30%;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.product-checkout-info{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 1em;
+}
+
+.product-checkout-info .qtd{
+    width: 4em;
+}
+
+.product-checkout-info div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    gap: 1em;
+}
+
+.product-checkout-info button{
+    background-color: #000;
+    width: 8em;
+    height: 2.5em;
+    font-size: 1em;
+}
+
+.total-bottom{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2em 8em;
+    
+}
+
+.total-bottom hr{
+    margin-top: 1em;
+}
+
+.total-bottom .subtotal{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.total-bottom .frete{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.total-bottom .sale{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.total-bottom .total{
+    margin-top: 1em;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.2em;
+}
+
+.total-bottom .total div{
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    height: 100%;
+    gap: 1em;
+}
+
+.total-bottom .total div button{
+    background-color: #000;
+    width: 10em;
+    height: 2.5em;
+    font-size: 1em;
+}
