@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { getProductsInfo } from "../services/ProductService";
+import { addCartItem } from "../services/CartService";
 
 import "./styles/productPage.css"
 
@@ -10,6 +11,7 @@ import "./styles/productPage.css"
 function ProductPage() {
     const { id } = useParams();
     const [product, setProduct] = useState(null);
+    const [addingToCart, setAddingToCart] = useState(false);
 
     useEffect(() => {
 
@@ -28,6 +30,18 @@ function ProductPage() {
 
     }, [id]);
 
+    const handleAddToCart = async () => {
+        try {
+            setAddingToCart(true);
+            await addCartItem(product.id, 1);
+            alert("Produto adicionado ao carrinho.");
+        } catch (error) {
+            alert(error.message);
+        } finally {
+            setAddingToCart(false);
+        }
+    };
+
     if (!product) {
         return <h2>Produto não encontrado</h2>;
     }
@@ -44,7 +58,13 @@ function ProductPage() {
                     </div>
                     <p className="price">R${product.price}</p>
                     <button className="buy">Comprar agora</button>
-                    <button className="add-cart">Adicionar ao carrinho</button>
+                    <button
+                        className="add-cart"
+                        onClick={handleAddToCart}
+                        disabled={addingToCart}
+                    >
+                        {addingToCart ? "Adicionando..." : "Adicionar ao carrinho"}
+                    </button>
                 </div>
             </div>
             <div className="product-description">

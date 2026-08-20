@@ -54,6 +54,7 @@ hr{
 .products-checkout .img{
     background-color: #000;
     width: 30%;
+    object-fit: cover;
     color: #fff;
     display: flex;
     justify-content: center;
@@ -141,4 +142,9 @@ hr{
     width: 10em;
     height: 2.5em;
     font-size: 1em;
+}
+
+.cart-message{
+    padding: 2em;
+    text-align: center;
 }

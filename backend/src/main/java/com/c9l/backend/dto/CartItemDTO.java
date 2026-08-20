@@ -16,6 +16,7 @@ public class CartItemDTO {
 	private Long id;
     private Long productId;
     private String productName;
+    private String productImage;
     private BigDecimal unitPrice;
     private Integer quantity;
     private BigDecimal subtotal;
@@ -25,6 +26,7 @@ public class CartItemDTO {
         this.id = entity.getId();
         this.productId = entity.getProduct().getId();
         this.productName = entity.getProduct().getName();
+        this.productImage = entity.getProduct().getImage();
         this.unitPrice = entity.getProduct().getPrice();
         this.quantity = entity.getQuantity();
 

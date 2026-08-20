@@ -29,5 +29,13 @@ export async function login(user){
         if(!response.ok){
             throw new Error("Login incorreto.");
         }
-        return await response.json();
+
+        const data = await response.json();
+        localStorage.setItem("token", data.token);
+
+        return data;
+}
+
+export function getToken() {
+    return localStorage.getItem("token");
 }
