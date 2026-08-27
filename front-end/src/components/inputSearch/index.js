@@ -1,8 +1,16 @@
 import './style.css'
 
-function InputSearch() {
+function InputSearch({ value, onChange, onFocus }) {
   return (
-      <input type="text" id="search" placeholder="Buscar produto"></input>
+      <input
+        type="search"
+        id="search"
+        placeholder="Buscar produto"
+        value={value}
+        onChange={onChange}
+        onFocus={onFocus}
+        autoComplete="off"
+      />
   );
 }
 

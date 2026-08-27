@@ -4,17 +4,20 @@ import { Link } from "react-router-dom";
 
 import "./style.css";
 
-function ProductCard() {
-  const [products, setProducts] = useState([]);
+function ProductCard({ products: suppliedProducts }) {
+  const [loadedProducts, setLoadedProducts] = useState([]);
 
   useEffect(() => {
     async function loadProducts() {
+      if (suppliedProducts !== undefined) return;
       const response = await getProductsInfo();
-      setProducts(response);
+      setLoadedProducts(response);
     }
 
     loadProducts();
-  }, []);
+  }, [suppliedProducts]);
+
+  const products = suppliedProducts ?? loadedProducts;
 
   return (
     <>

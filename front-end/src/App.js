@@ -6,6 +6,7 @@ import Cadastro from "./pages/Cadastro";
 import Home from "./pages/Home";
 import ProductPage from "./pages/ProductPage";
 import Cart from "./pages/Cart";
+import SearchResults from "./pages/SearchResults";
 
 import "./style.css"
 import "./reset.css"
@@ -19,6 +20,7 @@ function App() {
         <Route path="/cadastro" element={<Cadastro />} />
         <Route path="/produto/:id" element={<ProductPage />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/busca" element={<SearchResults />} />
       </Routes>
     </BrowserRouter>
   );

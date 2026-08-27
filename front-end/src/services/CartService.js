@@ -1,4 +1,4 @@
-import { getToken } from "./AuthService";
+import { getToken, removeToken } from "./AuthService";
 
 export async function getCart() {
     const token = getToken();
@@ -35,6 +35,11 @@ export async function addCartItem(productId, quantity = 1) {
         },
         body: JSON.stringify({ productId, quantity })
     });
+
+    if (response.status === 401 || response.status === 403) {
+        removeToken();
+        throw new Error("Sua sessão expirou. Faça login novamente.");
+    }
 
     if (!response.ok) {
         throw new Error("Não foi possível adicionar o produto ao carrinho.");

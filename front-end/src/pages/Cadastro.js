@@ -12,9 +12,15 @@ function Cadastro() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+
+    if (password !== confirmPassword) {
+      alert("As senhas não conferem");
+      return;
+    }
 
     const user = {
         name,
@@ -42,11 +48,12 @@ function Cadastro() {
         <form className="form" onSubmit={handleSubmit}>
         <InputCadastro type="text" id="name" placeholder="Nome completo" value={name}
     onChange={ (e) => setName(e.target.value)}></InputCadastro>
-        <InputCadastro type="mail" id="mail" placeholder="Digite seu email" value={email}
+        <InputCadastro type="email" id="email" placeholder="Digite seu email" value={email}
     onChange={ (e) => setEmail(e.target.value)}></InputCadastro>
-        <InputCadastro type="password" id="password" placeholder="Escolha uma senha" value={password}
+        <InputCadastro type="password" id="password" placeholder="Escolha uma senha" value={password} required
     onChange={ (e) => setPassword(e.target.value)}></InputCadastro>
-        <InputCadastro type="password" id="password" placeholder="Confirme sua senha"></InputCadastro>
+        <InputCadastro type="password" id="confirmPassword" placeholder="Confirme sua senha" value={confirmPassword} required
+    onChange={ (e) => setConfirmPassword(e.target.value)}></InputCadastro>
         <ButtonSubmit>Cadastrar</ButtonSubmit>
         </form>    
     </div>

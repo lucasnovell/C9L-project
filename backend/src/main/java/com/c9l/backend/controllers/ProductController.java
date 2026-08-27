@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.c9l.backend.dto.ProductDTO;
@@ -24,6 +25,13 @@ public class ProductController {
 	    Page<ProductDTO> page = service.findAll(pageable);
 
 	    return ResponseEntity.ok(page);
+	}
+
+	@GetMapping("/search")
+	public ResponseEntity<Page<ProductDTO>> search(
+			@RequestParam String query,
+			Pageable pageable) {
+		return ResponseEntity.ok(service.searchByName(query, pageable));
 	}
 
 	

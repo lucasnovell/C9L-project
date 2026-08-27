@@ -15,6 +15,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import jakarta.servlet.http.HttpServletResponse;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
@@ -33,14 +35,18 @@ public class SecurityConfiguration {
     	            )
     			
     			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+				.exceptionHandling(exception -> exception
+						.authenticationEntryPoint((request, response, authException) ->
+								response.sendError(HttpServletResponse.SC_UNAUTHORIZED)))
     			.authorizeHttpRequests(authorize -> authorize
     					.requestMatchers("/h2-console/**").permitAll()
     					.requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
     					.requestMatchers(HttpMethod.POST, "/user/register").permitAll()
     					.requestMatchers(HttpMethod.POST, "/user").hasRole("ADMIN")
+						.requestMatchers(HttpMethod.POST, "/cart/items").authenticated()
     					.requestMatchers(HttpMethod.DELETE, "/cart/{id}").authenticated()
     					.requestMatchers(HttpMethod.GET, "/cart").authenticated()
-    					.requestMatchers(HttpMethod.GET, "/product").permitAll() 
+					.requestMatchers(HttpMethod.GET, "/product", "/product/**").permitAll()
     					.anyRequest().authenticated())   	
     			.addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
     			

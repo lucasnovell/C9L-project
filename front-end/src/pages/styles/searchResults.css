@@ -1,0 +1,17 @@
+.search-results {
+    padding: 2em;
+}
+
+.search-results h1 {
+    margin-bottom: 1.5em;
+}
+
+.search-products {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+}
+
+.search-error {
+    color: #b00020;
+}

@@ -70,13 +70,10 @@ public class CartService {
             item.setQuantity(dto.getQuantity());
 
             cartItemRepository.save(item);
+            cart.getItems().add(item);
         }
 
-        
-        Cart updatedCart = cartRepository.findByUser(user)
-                .orElseThrow();
-
-        return new CartDTO(updatedCart);
+        return new CartDTO(cart);
     }
     
     public void deleteItem(Long id) {

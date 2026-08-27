@@ -23,5 +23,10 @@ public class ProductService {
 
 	    return page.map(ProductDTO::new);
 	}
+
+	public Page<ProductDTO> searchByName(String query, Pageable pageable) {
+		return repository.findByNameContainingIgnoreCase(query.trim(), pageable)
+				.map(ProductDTO::new);
+	}
 	
 }

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { getProductsInfo } from "../services/ProductService";
 import { addCartItem } from "../services/CartService";
@@ -10,6 +10,7 @@ import "./styles/productPage.css"
 
 function ProductPage() {
     const { id } = useParams();
+    const navigate = useNavigate();
     const [product, setProduct] = useState(null);
     const [addingToCart, setAddingToCart] = useState(false);
 
@@ -37,6 +38,9 @@ function ProductPage() {
             alert("Produto adicionado ao carrinho.");
         } catch (error) {
             alert(error.message);
+            if (error.message === "Sua sessão expirou. Faça login novamente.") {
+                navigate("/login");
+            }
         } finally {
             setAddingToCart(false);
         }
