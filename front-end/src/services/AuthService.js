@@ -43,3 +43,24 @@ export function getToken() {
 export function removeToken() {
     localStorage.removeItem("token");
 }
+
+export async function getLoggedUser() {
+    const token = getToken();
+
+    if (!token) {
+        throw new Error("Usuário não autenticado.");
+    }
+
+    const response = await fetch("http://localhost:8080/auth/me", {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+
+    if (!response.ok) {
+        removeToken();
+        throw new Error("Sua sessão expirou. Faça login novamente.");
+    }
+
+    return await response.json();
+}

@@ -73,6 +73,10 @@ function Cart() {
     }
   };
 
+  const handleCheckout = () => {
+    navigate("/checkout");
+  };
+
   if (loading) {
     return <p className="cart-message">Carregando carrinho...</p>;
   }
@@ -91,7 +95,7 @@ function Cart() {
     </div>
     <div className="total-top">
         <p>TOTAL: {formatPrice(cart.total)}</p>
-        <ButtonSubmit>Finalizar Compra</ButtonSubmit>
+        <ButtonSubmit type="button" onClick={handleCheckout}>Finalizar Compra</ButtonSubmit>
     </div>
     <hr />
     <div className="products-checkout">
@@ -144,7 +148,7 @@ function Cart() {
             <p>TOTAL</p>
             <div>
                 <p>{formatPrice(cart.total)}</p>
-                <button>Finalizar Compra</button>
+                <button type="button" onClick={handleCheckout}>Finalizar Compra</button>
             </div>
         </div>
         

@@ -6,4 +6,5 @@ button{
     background-color: gray;
     color: white;
     font-size: 20px;
+    cursor: pointer;
 }

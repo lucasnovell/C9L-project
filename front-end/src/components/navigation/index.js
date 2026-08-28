@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import InputSearch from "../inputSearch";
+import { getLoggedUser, removeToken } from "../../services/AuthService";
 
 import './style.css'
 
@@ -10,7 +11,21 @@ function Navigation() {
   const [query, setQuery] = useState(searchParams.get("q") || "");
   const [recentSearches, setRecentSearches] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [loggedUser, setLoggedUser] = useState(null);
   const searchRef = useRef(null);
+
+  useEffect(() => {
+    async function loadLoggedUser() {
+      try {
+        const user = await getLoggedUser();
+        setLoggedUser(user);
+      } catch {
+        setLoggedUser(null);
+      }
+    }
+
+    loadLoggedUser();
+  }, []);
 
   useEffect(() => {
     try {
@@ -53,6 +68,12 @@ function Navigation() {
     performSearch(query);
   };
 
+  const handleLogout = () => {
+    removeToken();
+    setLoggedUser(null);
+    navigate("/");
+  };
+
   return (
       <nav>
         <Link
@@ -89,16 +110,24 @@ function Navigation() {
           <div className="nav-right">
             
               <div className="user-services">
-                <Link
-            className="register-link"
-            to={`/cadastro`}>
-              <span>Cadastrar</span>
-              </Link>
-                <Link
-            className="register-link"
-            to={`/login`}>
-              <span>Entrar</span>
-              </Link>
+                {loggedUser ? (
+                  <button className="logout-button" type="button" onClick={handleLogout}>
+                    Sair
+                  </button>
+                ) : (
+                  <>
+                    <Link
+                      className="register-link"
+                      to={`/cadastro`}>
+                      <span>Cadastrar</span>
+                    </Link>
+                    <Link
+                      className="register-link"
+                      to={`/login`}>
+                      <span>Entrar</span>
+                    </Link>
+                  </>
+                )}
               </div>
             
             <Link 

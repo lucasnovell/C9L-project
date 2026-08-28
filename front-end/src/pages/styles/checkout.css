@@ -1,0 +1,40 @@
+.Checkout{
+    min-height: 100vh;
+    background-color: #fff;
+}
+
+.checkout-path{
+    padding: 1em 2em;
+}
+
+.checkout-content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2em;
+}
+
+.checkout-form{
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    width: 100%;
+    max-width: 500px;
+    margin-top: 2em;
+}
+
+.checkout-form h2{
+    margin-top: 1em;
+}
+
+.checkout-form select{
+    border-radius: 10px;
+    height: 2.5em;
+    width: 100%;
+    padding: 0 .8em;
+}
+
+.checkout-form button{
+    align-self: center;
+    margin-top: 1em;
+}
