@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import ButtonSubmit from "../components/buttonSubmit";
-import { addCartItem, deleteCartItem, getCart } from "../services/CartService";
+import { deleteCartItem, getCart, updateCartItemQuantity } from "../services/CartService";
 import "./styles/cart.css"
 
 const formatPrice = (value) => Number(value).toLocaleString("pt-BR", {
@@ -11,6 +11,7 @@ const formatPrice = (value) => Number(value).toLocaleString("pt-BR", {
 
 function Cart() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [cart, setCart] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -54,16 +55,14 @@ function Cart() {
   };
 
   const handleQuantityChange = async (item, newQuantity) => {
-    const quantityToAdd = newQuantity - item.quantity;
-
-    if (quantityToAdd < 1) {
+    if (newQuantity < 1 || newQuantity === item.quantity) {
       return;
     }
 
     try {
       setActionError("");
       setUpdatingItemId(item.id);
-      const updatedCart = await addCartItem(item.productId, quantityToAdd);
+      const updatedCart = await updateCartItemQuantity(item.id, newQuantity);
       setCart(updatedCart);
     } catch (error) {
       setActionError(error.message);
@@ -99,6 +98,7 @@ function Cart() {
     </div>
     <hr />
     <div className="products-checkout">
+        {location.state?.successMessage && <p className="cart-message">{location.state.successMessage}</p>}
         {actionError && <p className="cart-message">{actionError}</p>}
         {cart.items.length === 0 ? (
           <p className="cart-message">Seu carrinho está vazio.</p>
@@ -116,7 +116,7 @@ function Cart() {
                       <input
                         className="qtd"
                         type="number"
-                        min={item.quantity}
+                        min="1"
                         value={item.quantity}
                         disabled={updatingItemId === item.id}
                         onChange={(event) => handleQuantityChange(item, Number(event.target.value))}

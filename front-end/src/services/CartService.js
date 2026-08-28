@@ -71,3 +71,31 @@ export async function deleteCartItem(id) {
         throw new Error("Não foi possível remover o produto do carrinho.");
     }
 }
+
+export async function updateCartItemQuantity(id, quantity) {
+    const token = getToken();
+
+    if (!token) {
+        throw new Error("Usuário não autenticado.");
+    }
+
+    const response = await fetch(`http://localhost:8080/cart/${id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ quantity })
+    });
+
+    if (response.status === 401 || response.status === 403) {
+        removeToken();
+        throw new Error("Sua sessão expirou. Faça login novamente.");
+    }
+
+    if (!response.ok) {
+        throw new Error("Não foi possível atualizar a quantidade do produto.");
+    }
+
+    return await response.json();
+}

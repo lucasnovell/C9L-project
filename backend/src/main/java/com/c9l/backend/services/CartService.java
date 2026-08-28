@@ -1,6 +1,5 @@
 package com.c9l.backend.services;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.c9l.backend.dto.AddCartItemDTO;
 import com.c9l.backend.dto.CartDTO;
-import com.c9l.backend.dto.CartItemDTO;
+import com.c9l.backend.dto.UpdateCartItemDTO;
 import com.c9l.backend.entities.Cart;
 import com.c9l.backend.entities.CartItem;
 import com.c9l.backend.entities.Product;
@@ -84,7 +83,21 @@ public class CartService {
     			.orElseThrow(() -> new RuntimeException("Item not found"));
     	
     	cartItemRepository.delete(item);
-    			
+    				
+    }
+
+    @Transactional
+    public CartDTO updateItemQuantity(Long id, UpdateCartItemDTO dto) {
+        User user = userService.getAuthenticatedUser();
+
+        CartItem item = cartItemRepository
+                .findByIdAndCartUserId(id, user.getId())
+                .orElseThrow(() -> new RuntimeException("Item not found"));
+
+        item.setQuantity(dto.getQuantity());
+        cartItemRepository.save(item);
+
+        return new CartDTO(item.getCart());
     }
     
     public CartDTO listCart() {

@@ -1,18 +1,21 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ButtonSubmit from "../components/buttonSubmit";
 import InputCadastro from "../components/inputCadastro";
+import { checkout } from "../services/OrderService";
 import "./styles/checkout.css";
 
 function Checkout() {
+  const navigate = useNavigate();
   const [street, setStreet] = useState("");
   const [number, setNumber] = useState("");
   const [complement, setComplement] = useState("");
   const [zipCode, setZipCode] = useState("");
   const [referencePoint, setReferencePoint] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
+  const [finishingPurchase, setFinishingPurchase] = useState(false);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (!street.trim() || !number.trim() || !zipCode.trim() || !paymentMethod) {
@@ -20,7 +23,29 @@ function Checkout() {
       return;
     }
 
-    alert("Compra realizada com sucesso!");
+    try {
+      setFinishingPurchase(true);
+      await checkout();
+
+      setStreet("");
+      setNumber("");
+      setComplement("");
+      setZipCode("");
+      setReferencePoint("");
+      setPaymentMethod("");
+
+      navigate("/cart", {
+        state: { successMessage: "Compra realizada com sucesso!" }
+      });
+    } catch (error) {
+      alert(error.message);
+
+      if (error.message === "Sua sessão expirou. Faça login novamente.") {
+        navigate("/login");
+      }
+    } finally {
+      setFinishingPurchase(false);
+    }
   };
 
   return (
@@ -86,7 +111,9 @@ function Checkout() {
             <option value="pix">Pix</option>
           </select>
 
-          <ButtonSubmit>Pagar e Finalizar</ButtonSubmit>
+          <ButtonSubmit disabled={finishingPurchase}>
+            {finishingPurchase ? "Finalizando..." : "Pagar e Finalizar"}
+          </ButtonSubmit>
         </form>
       </main>
     </div>

@@ -44,6 +44,7 @@ public class SecurityConfiguration {
     					.requestMatchers(HttpMethod.POST, "/user/register").permitAll()
     					.requestMatchers(HttpMethod.POST, "/user").hasRole("ADMIN")
 						.requestMatchers(HttpMethod.POST, "/cart/items").authenticated()
+						.requestMatchers(HttpMethod.PUT, "/cart/{id}").authenticated()
     					.requestMatchers(HttpMethod.DELETE, "/cart/{id}").authenticated()
     					.requestMatchers(HttpMethod.GET, "/cart").authenticated()
 					.requestMatchers(HttpMethod.GET, "/product", "/product/**").permitAll()
