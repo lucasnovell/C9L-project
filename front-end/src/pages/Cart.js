@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ButtonSubmit from "../components/buttonSubmit";
-import { getCart } from "../services/CartService";
+import { addCartItem, deleteCartItem, getCart } from "../services/CartService";
 import "./styles/cart.css"
 
 const formatPrice = (value) => Number(value).toLocaleString("pt-BR", {
@@ -10,9 +10,12 @@ const formatPrice = (value) => Number(value).toLocaleString("pt-BR", {
 });
 
 function Cart() {
+  const navigate = useNavigate();
   const [cart, setCart] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [actionError, setActionError] = useState("");
+  const [updatingItemId, setUpdatingItemId] = useState(null);
 
   useEffect(() => {
     async function loadCart() {
@@ -28,6 +31,47 @@ function Cart() {
 
     loadCart();
   }, []);
+
+  const handleSessionExpired = (error) => {
+    if (error.message === "Sua sessão expirou. Faça login novamente.") {
+      navigate("/login");
+    }
+  };
+
+  const handleRemoveItem = async (itemId) => {
+    try {
+      setActionError("");
+      setUpdatingItemId(itemId);
+      await deleteCartItem(itemId);
+      const updatedCart = await getCart();
+      setCart(updatedCart);
+    } catch (error) {
+      setActionError(error.message);
+      handleSessionExpired(error);
+    } finally {
+      setUpdatingItemId(null);
+    }
+  };
+
+  const handleQuantityChange = async (item, newQuantity) => {
+    const quantityToAdd = newQuantity - item.quantity;
+
+    if (quantityToAdd < 1) {
+      return;
+    }
+
+    try {
+      setActionError("");
+      setUpdatingItemId(item.id);
+      const updatedCart = await addCartItem(item.productId, quantityToAdd);
+      setCart(updatedCart);
+    } catch (error) {
+      setActionError(error.message);
+      handleSessionExpired(error);
+    } finally {
+      setUpdatingItemId(null);
+    }
+  };
 
   if (loading) {
     return <p className="cart-message">Carregando carrinho...</p>;
@@ -51,6 +95,7 @@ function Cart() {
     </div>
     <hr />
     <div className="products-checkout">
+        {actionError && <p className="cart-message">{actionError}</p>}
         {cart.items.length === 0 ? (
           <p className="cart-message">Seu carrinho está vazio.</p>
         ) : (
@@ -64,10 +109,23 @@ function Cart() {
                   />
                   <div className="product-checkout-info">
                       <p className="name">{item.productName}</p>
-                      <input className="qtd" type="number" min="1" value={item.quantity} readOnly></input>
+                      <input
+                        className="qtd"
+                        type="number"
+                        min={item.quantity}
+                        value={item.quantity}
+                        disabled={updatingItemId === item.id}
+                        onChange={(event) => handleQuantityChange(item, Number(event.target.value))}
+                      />
                       <div>
                           <p>{formatPrice(item.subtotal)}</p>
-                          <button>Remover</button>
+                          <button
+                            type="button"
+                            disabled={updatingItemId === item.id}
+                            onClick={() => handleRemoveItem(item.id)}
+                          >
+                            {updatingItemId === item.id ? "Aguarde..." : "Remover"}
+                          </button>
                       </div>
                   </div>
               </div>

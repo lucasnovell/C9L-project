@@ -14,19 +14,26 @@ function ProductPage() {
     const { id } = useParams();
     const navigate = useNavigate();
     const [product, setProduct] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
     const [addingToCart, setAddingToCart] = useState(false);
 
     useEffect(() => {
 
         async function loadProduct(){
+            try {
+                const products = await getProductsInfo();
 
-            const products = await getProductsInfo();
+                const selectedProduct = products.find(
+                    p => p.id === Number(id)
+                );
 
-            const selectedProduct = products.find(
-                p => p.id === Number(id)
-            );
-
-            setProduct(selectedProduct);
+                setProduct(selectedProduct);
+            } catch (requestError) {
+                setError(requestError.message);
+            } finally {
+                setLoading(false);
+            }
         }
 
         loadProduct();
@@ -47,6 +54,14 @@ function ProductPage() {
             setAddingToCart(false);
         }
     };
+
+    if (loading) {
+        return <h2>Carregando produto...</h2>;
+    }
+
+    if (error) {
+        return <h2>{error}</h2>;
+    }
 
     if (!product) {
         return <h2>Produto não encontrado</h2>;

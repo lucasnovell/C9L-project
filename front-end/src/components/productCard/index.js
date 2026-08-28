@@ -6,18 +6,35 @@ import "./style.css";
 
 function ProductCard({ products: suppliedProducts }) {
   const [loadedProducts, setLoadedProducts] = useState([]);
+  const [loading, setLoading] = useState(suppliedProducts === undefined);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     async function loadProducts() {
       if (suppliedProducts !== undefined) return;
-      const response = await getProductsInfo();
-      setLoadedProducts(response);
+
+      try {
+        const response = await getProductsInfo();
+        setLoadedProducts(response);
+      } catch (requestError) {
+        setError(requestError.message);
+      } finally {
+        setLoading(false);
+      }
     }
 
     loadProducts();
   }, [suppliedProducts]);
 
   const products = suppliedProducts ?? loadedProducts;
+
+  if (loading) {
+    return <p>Carregando produtos...</p>;
+  }
+
+  if (error) {
+    return <p>{error}</p>;
+  }
 
   return (
     <>

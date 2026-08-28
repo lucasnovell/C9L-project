@@ -88,6 +88,12 @@ hr{
     font-size: 1em;
 }
 
+.product-checkout-info button:disabled,
+.product-checkout-info .qtd:disabled{
+    cursor: not-allowed;
+    opacity: .6;
+}
+
 .total-bottom{
     display: flex;
     flex-direction: column;
