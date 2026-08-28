@@ -2,7 +2,7 @@ import { useState } from "react";
 import { register } from "../services/AuthService"
 import InputCadastro from "../components/inputCadastro"
 import ButtonSubmit from "../components/buttonSubmit"
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 import "./styles/cadastro.css"
@@ -44,6 +44,9 @@ function Cadastro() {
 
   return (
     <div className="Cadastro">   
+        <Link to={"/"}>
+        <span>X</span>
+        </Link>
         <h1>Complete seu cadastro</h1>
         <form className="form" onSubmit={handleSubmit}>
         <InputCadastro type="text" id="name" placeholder="Nome completo" value={name}

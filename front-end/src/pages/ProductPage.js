@@ -4,6 +4,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getProductsInfo } from "../services/ProductService";
 import { addCartItem } from "../services/CartService";
 
+import Navigation from "../components/navigation";
+
 import "./styles/productPage.css"
 
 
@@ -52,6 +54,7 @@ function ProductPage() {
 
     return (
         <>
+            <Navigation></Navigation>
             <div className="product-info">  
                 <img className="product-image" alt={product.name} src={product.image}></img>
                 <div className="buy-info">

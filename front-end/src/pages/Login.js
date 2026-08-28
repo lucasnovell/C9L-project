@@ -1,7 +1,7 @@
 import InputCadastro from "../components/inputCadastro"
 import ButtonSubmit from "../components/buttonSubmit"
 
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react"
 import { login } from "../services/AuthService";
 
@@ -32,6 +32,9 @@ function Login() {
 
   return (
     <div className="Login">
+       <Link to={"/"}>
+        <span>X</span>
+        </Link>
         <h1>Entre na sua conta</h1>
 
         <form className="form" onSubmit={handleLogin}>

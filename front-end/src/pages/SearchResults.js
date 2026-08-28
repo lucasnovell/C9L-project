@@ -29,7 +29,7 @@ function SearchResults() {
 
   return (
     <div>
-      <Navigation />
+      <Navigation></Navigation>
       <main className="search-results">
         <h1>Resultados para “{query}”</h1>
         {loading && <p>Buscando produtos...</p>}

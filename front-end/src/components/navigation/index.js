@@ -87,11 +87,20 @@ function Navigation() {
               </ul>
           </div> 
           <div className="nav-right">
-            <Link
+            
+              <div className="user-services">
+                <Link
             className="register-link"
             to={`/cadastro`}>
-              <div className="user">user</div>
-            </Link>
+              <span>Cadastrar</span>
+              </Link>
+                <Link
+            className="register-link"
+            to={`/login`}>
+              <span>Entrar</span>
+              </Link>
+              </div>
+            
             <Link 
             className="cart-link"
             to={`/cart`}>
