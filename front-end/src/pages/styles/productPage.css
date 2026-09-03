@@ -1,70 +1,73 @@
-*{
-    padding: 0;
-    margin: 0;
+.product-page__main { padding-bottom: clamp(4rem, 8vw, 7rem); }
+
+.product-view {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(20rem, 0.85fr);
+    overflow: hidden;
 }
 
-body{
-    max-width: 900px;
-    margin: 0 auto;
+.product-gallery {
+    min-width: 0;
+    min-height: clamp(25rem, 48vw, 38rem);
+    position: relative;
+    display: grid;
+    place-items: center;
+    padding: clamp(1.5rem, 5vw, 4rem);
+    background: var(--color-surface-subtle);
 }
 
-.product-info{
-    padding: 0;
-    width: 100%;
-    height: 50vh;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
+.product-image { width: 100%; height: 100%; max-height: 30rem; object-fit: contain; }
+
+.product-view__badge {
+    position: absolute;
+    top: var(--space-5);
+    left: var(--space-5);
+    padding: 0.35rem 0.65rem;
+    border-radius: var(--radius-pill);
+    color: var(--color-primary-700);
+    background: var(--color-primary-50);
+    font-size: 0.6875rem;
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
 }
 
-
-
-.product-image{
-    height: 100%;
-    width: 50%;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.buy-info{
-    width: 50%;
+.buy-info {
+    min-width: 0;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
-    padding: 1em;
+    justify-content: center;
+    padding: clamp(1.5rem, 5vw, 4rem);
+    border-left: var(--border-width) solid var(--color-border);
 }
 
-.buy-info .name{
-    font-size: 2em;
+.product-view__eyebrow { color: var(--color-primary-600); font-size: 0.6875rem; font-weight: var(--font-weight-bold); letter-spacing: 0.12em; text-transform: uppercase; }
+.buy-info .page-title { margin: var(--space-3) 0 var(--space-4); font-size: clamp(1.75rem, 3vw, 2.5rem); }
+
+.product-view__rating { display: flex; align-items: center; gap: var(--space-2); color: #f79009; }
+.product-view__rating small { color: var(--color-muted); font-size: 0.75rem; }
+
+.product-view__price { display: flex; flex-direction: column; margin-top: var(--space-8); }
+.product-view__price > span { color: var(--color-muted); font-size: 0.75rem; font-weight: var(--font-weight-semibold); text-transform: uppercase; letter-spacing: 0.08em; }
+.product-view__price strong { margin: var(--space-1) 0; color: var(--color-ink); font-size: clamp(2rem, 4vw, 3rem); line-height: 1.15; letter-spacing: -0.04em; }
+.product-view__price small { color: var(--color-muted); font-size: 0.8125rem; }
+.product-view__stock { margin-top: var(--space-6); color: var(--color-success); font-size: 0.8125rem; font-weight: var(--font-weight-semibold); }
+
+.product-view__actions { display: grid; grid-template-columns: 1fr; gap: var(--space-3); margin-top: var(--space-5); }
+.product-view__actions .button { width: 100%; }
+
+.product-content { margin-top: var(--space-5); padding: clamp(1.5rem, 4vw, 2.5rem); }
+.product-content h2 { margin-bottom: var(--space-3); color: var(--color-ink); font-size: clamp(1.25rem, 2vw, 1.5rem); }
+.product-content p { color: var(--color-ink-soft); font-size: 0.9375rem; }
+.product-reviews-empty { padding: var(--space-6) 0; color: var(--color-muted) !important; text-align: center; }
+
+@media (max-width: 48rem) {
+    .product-view { grid-template-columns: 1fr; }
+    .product-gallery { min-height: 22rem; }
+    .buy-info { border-top: var(--border-width) solid var(--color-border); border-left: 0; }
 }
 
-.buy-info .price{
-    font-size: 2em;
-}
-
-.buy-info .buy{
-    background-color: #fff;
-    color: #000;
-    align-self: center;
-}
-
-.buy-info .add-cart{
-    background-color: blue;
-    color: #fff;
-    align-self: center;
-}
-
-
-.product-description{
-    width: 100%;
-    height: 30vh;
-    padding: 1em;
-}
-
-.product-rating{
-    width: 100%;
-    height: 30vh;
-    padding: 1em;
+@media (max-width: 23.5rem) {
+    .product-gallery { min-height: 18rem; padding: var(--space-5); }
+    .buy-info { padding: var(--space-5); }
 }

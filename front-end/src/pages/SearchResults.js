@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import Navigation from "../components/navigation";
 import ProductCard from "../components/productCard";
+import SiteFooter from "../components/footer";
 import { searchProducts } from "../services/ProductService";
 import "./styles/searchResults.css";
 
@@ -28,19 +29,23 @@ function SearchResults() {
   }, [query]);
 
   return (
-    <div>
-      <Navigation></Navigation>
-      <main className="search-results">
-        <h1>Resultados para “{query}”</h1>
-        {loading && <p>Buscando produtos...</p>}
-        {error && <p className="search-error">{error}</p>}
+    <div className="site-page search-page">
+      <Navigation variant="home" />
+      <main className="site-container search-results">
+        <div className="search-results__heading">
+          <span>Resultado da busca</span>
+          <h1 className="page-title">Resultados para “{query}”</h1>
+        </div>
+        {loading && <div className="page-state" role="status"><strong>Buscando produtos...</strong></div>}
+        {error && <div className="page-state page-state--error" role="alert"><strong>Não foi possível realizar a busca.</strong><span>{error}</span></div>}
         {!loading && !error && products.length === 0 && (
-          <p>Nenhum produto encontrado.</p>
+          <div className="page-state surface-card"><strong>Nenhum produto encontrado.</strong><span>Tente buscar por outro nome ou categoria.</span></div>
         )}
         {!loading && !error && products.length > 0 && (
-          <div className="search-products"><ProductCard products={products} /></div>
+          <div className="search-products"><ProductCard products={products} variant="home" /></div>
         )}
       </main>
+      <SiteFooter />
     </div>
   );
 }

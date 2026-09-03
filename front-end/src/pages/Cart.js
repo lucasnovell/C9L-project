@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import ButtonSubmit from "../components/buttonSubmit";
+
+import Navigation from "../components/navigation";
+import Button, { ButtonLink } from "../components/button";
 import { deleteCartItem, getCart, updateCartItemQuantity } from "../services/CartService";
-import "./styles/cart.css"
+
+import "./styles/cart.css";
 
 const formatPrice = (value) => Number(value).toLocaleString("pt-BR", {
-    style: "currency",
-    currency: "BRL"
+  style: "currency",
+  currency: "BRL",
 });
 
 function Cart() {
@@ -21,10 +24,9 @@ function Cart() {
   useEffect(() => {
     async function loadCart() {
       try {
-        const response = await getCart();
-        setCart(response);
-      } catch (error) {
-        setError(error.message);
+        setCart(await getCart());
+      } catch (requestError) {
+        setError(requestError.message);
       } finally {
         setLoading(false);
       }
@@ -33,10 +35,8 @@ function Cart() {
     loadCart();
   }, []);
 
-  const handleSessionExpired = (error) => {
-    if (error.message === "Sua sessão expirou. Faça login novamente.") {
-      navigate("/login");
-    }
+  const handleSessionExpired = (requestError) => {
+    if (requestError.message === "Sua sessão expirou. Faça login novamente.") navigate("/login");
   };
 
   const handleRemoveItem = async (itemId) => {
@@ -44,115 +44,123 @@ function Cart() {
       setActionError("");
       setUpdatingItemId(itemId);
       await deleteCartItem(itemId);
-      const updatedCart = await getCart();
-      setCart(updatedCart);
-    } catch (error) {
-      setActionError(error.message);
-      handleSessionExpired(error);
+      setCart(await getCart());
+    } catch (requestError) {
+      setActionError(requestError.message);
+      handleSessionExpired(requestError);
     } finally {
       setUpdatingItemId(null);
     }
   };
 
   const handleQuantityChange = async (item, newQuantity) => {
-    if (newQuantity < 1 || newQuantity === item.quantity) {
-      return;
-    }
+    if (newQuantity < 1 || newQuantity === item.quantity) return;
 
     try {
       setActionError("");
       setUpdatingItemId(item.id);
-      const updatedCart = await updateCartItemQuantity(item.id, newQuantity);
-      setCart(updatedCart);
-    } catch (error) {
-      setActionError(error.message);
-      handleSessionExpired(error);
+      setCart(await updateCartItemQuantity(item.id, newQuantity));
+    } catch (requestError) {
+      setActionError(requestError.message);
+      handleSessionExpired(requestError);
     } finally {
       setUpdatingItemId(null);
     }
   };
 
-  const handleCheckout = () => {
-    navigate("/checkout");
-  };
+  const pageState = (title, message, isError = false) => (
+    <div className="site-page">
+      <Navigation variant="home" />
+      <main className={`site-container page-state ${isError ? "page-state--error" : ""}`} role={isError ? "alert" : "status"}>
+        <strong>{title}</strong>
+        {message && <span>{message}</span>}
+      </main>
+    </div>
+  );
 
-  if (loading) {
-    return <p className="cart-message">Carregando carrinho...</p>;
-  }
+  if (loading) return pageState("Carregando carrinho...");
+  if (error) return pageState("Não foi possível carregar o carrinho.", error, true);
 
-  if (error) {
-    return <p className="cart-message">{error}</p>;
-  }
+  const itemCount = cart.items.reduce((total, item) => total + item.quantity, 0);
 
   return (
-    <div className="cart-body">
-    <div className="path">
-        <p><Link 
-        className="home-link"
-        to={`/`}>Home</Link> {`>`} carrinho</p>
-        <div className="user">user</div>
-    </div>
-    <div className="total-top">
-        <p>TOTAL: {formatPrice(cart.total)}</p>
-        <ButtonSubmit type="button" onClick={handleCheckout}>Finalizar Compra</ButtonSubmit>
-    </div>
-    <hr />
-    <div className="products-checkout">
-        {location.state?.successMessage && <p className="cart-message">{location.state.successMessage}</p>}
-        {actionError && <p className="cart-message">{actionError}</p>}
-        {cart.items.length === 0 ? (
-          <p className="cart-message">Seu carrinho está vazio.</p>
-        ) : (
-          cart.items.map((item, index) => (
-            <div key={item.id}>
-              <div className="product-cart">
-                  <img
-                    className="img"
-                    src={item.productImage}
-                    alt={item.productName}
-                  />
-                  <div className="product-checkout-info">
-                      <p className="name">{item.productName}</p>
-                      <input
-                        className="qtd"
-                        type="number"
-                        min="1"
-                        value={item.quantity}
-                        disabled={updatingItemId === item.id}
-                        onChange={(event) => handleQuantityChange(item, Number(event.target.value))}
-                      />
-                      <div>
-                          <p>{formatPrice(item.subtotal)}</p>
-                          <button
-                            type="button"
-                            disabled={updatingItemId === item.id}
-                            onClick={() => handleRemoveItem(item.id)}
-                          >
-                            {updatingItemId === item.id ? "Aguarde..." : "Remover"}
-                          </button>
-                      </div>
-                  </div>
+    <div className="site-page cart-page">
+      <Navigation variant="home" />
+      <main className="site-container cart-main">
+        <nav className="page-breadcrumb" aria-label="Breadcrumb">
+          <Link to="/">Início</Link><span aria-hidden="true">/</span><span>Carrinho</span>
+        </nav>
+
+        <header className="cart-heading">
+          <div>
+            <h1 className="page-title">Seu carrinho</h1>
+            <p>{itemCount} {itemCount === 1 ? "item" : "itens"} na sua seleção</p>
+          </div>
+          <strong>{formatPrice(cart.total)}</strong>
+        </header>
+
+        {location.state?.successMessage && <p className="cart-alert cart-alert--success" role="status">{location.state.successMessage}</p>}
+        {actionError && <p className="cart-alert cart-alert--error" role="alert">{actionError}</p>}
+
+        <div className="cart-layout">
+          <section className="cart-items surface-card" aria-label="Produtos no carrinho">
+            {cart.items.length === 0 ? (
+              <div className="cart-empty">
+                <strong>Seu carrinho está vazio.</strong>
+                <p>Explore o catálogo e encontre a tecnologia ideal para você.</p>
+                <ButtonLink to="/" variant="primary" size="medium">Voltar ao catálogo</ButtonLink>
               </div>
-              {index < cart.items.length - 1 && <hr />}
-            </div>
-          ))
-        )}
-    </div>
-    <hr />
-    <div className="total-bottom">
-        <p className="subtotal">Sub. Total  <span>{formatPrice(cart.total)}</span></p>
-        <p className="frete">Frete  <span>{formatPrice(0)}</span></p>
-        <p className="sale">Desconto  <span>{formatPrice(0)}</span></p>
-        <hr />
-        <div  className="total">
-            <p>TOTAL</p>
-            <div>
-                <p>{formatPrice(cart.total)}</p>
-                <button type="button" onClick={handleCheckout}>Finalizar Compra</button>
-            </div>
+            ) : (
+              cart.items.map(item => (
+                <article className="cart-item" key={item.id}>
+                  <img src={item.productImage} alt={item.productName} />
+                  <div className="cart-item__content">
+                    <h2>{item.productName}</h2>
+                    <div className="cart-item__bottom">
+                      <label className="quantity-control">
+                        <span>Quantidade</span>
+                        <input
+                          type="number"
+                          min="1"
+                          value={item.quantity}
+                          disabled={updatingItemId === item.id}
+                          onChange={(event) => handleQuantityChange(item, Number(event.target.value))}
+                        />
+                      </label>
+                      <div className="cart-item__price">
+                        <strong>{formatPrice(item.subtotal)}</strong>
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="small"
+                          loading={updatingItemId === item.id}
+                          onClick={() => handleRemoveItem(item.id)}
+                        >
+                          Remover
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              ))
+            )}
+          </section>
+
+          <aside className="cart-summary surface-card" aria-labelledby="summary-title">
+            <h2 id="summary-title">Resumo do pedido</h2>
+            <dl>
+              <div><dt>Subtotal</dt><dd>{formatPrice(cart.total)}</dd></div>
+              <div><dt>Frete</dt><dd>{formatPrice(0)}</dd></div>
+              <div><dt>Desconto</dt><dd>{formatPrice(0)}</dd></div>
+              <div className="cart-summary__total"><dt>Total</dt><dd>{formatPrice(cart.total)}</dd></div>
+            </dl>
+            <Button type="button" variant="primary" size="large" disabled={cart.items.length === 0} onClick={() => navigate("/checkout")}>
+              Finalizar compra
+            </Button>
+            <ButtonLink to="/" variant="ghost" size="medium">Continuar comprando</ButtonLink>
+          </aside>
         </div>
-        
-    </div>
+      </main>
     </div>
   );
 }

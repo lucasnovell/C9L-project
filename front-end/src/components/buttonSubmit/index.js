@@ -1,10 +1,20 @@
-
+import Button from "../button";
 
 import './style.css'
 
-function ButtonSubmit({children, onClick, type = "submit", disabled = false}) {
+function ButtonSubmit({ children, onClick, type = "submit", disabled = false, loading = false, variant = "primary", size = "large", className = "" }) {
   return (
-      <button type={type} onClick={onClick} disabled={disabled}> {children} </button>
+      <Button
+        type={type}
+        onClick={onClick}
+        disabled={disabled}
+        loading={loading}
+        variant={variant}
+        size={size}
+        className={`button-submit ${className}`.trim()}
+      >
+        {children}
+      </Button>
   );
 }
 
