@@ -4,6 +4,7 @@ import Navigation from "../components/navigation";
 import ProductCard from "../components/productCard";
 import { ButtonLink } from "../components/button";
 import SiteFooter from "../components/footer";
+import BackToTopButton from "../components/backToTopButton";
 
 import "./styles/home.css";
 
@@ -15,6 +16,7 @@ const categories = [
   { label: "Smartphones", query: "smartphone", code: "SP" },
   { label: "Consoles", query: "console", code: "GM" },
 ];
+
 
 function Home() {
   return (
@@ -29,7 +31,7 @@ function Home() {
               <h1 id="promo-title">Tecnologia para trabalho, estudo e diversão.</h1>
               <p>Encontre notebooks, periféricos e produtos gamer selecionados para o seu ritmo.</p>
             </div>
-            <ButtonLink to="/busca?q=gamer" variant="secondary" size="large">
+            <ButtonLink to="/busca?q=ssd" variant="secondary" size="large">
               Ver promoções <span aria-hidden="true">→</span>
             </ButtonLink>
           </div>
@@ -42,9 +44,7 @@ function Home() {
                 <span className="home-eyebrow">Escolha seu universo</span>
                 <h2 id="categories-title">Compre por categoria</h2>
               </div>
-              <Link to="/busca?q=tecnologia" className="home-text-link">
-                Ver catálogo <span aria-hidden="true">→</span>
-              </Link>
+              
             </div>
             <div className="category-grid">
               {categories.map(category => (
@@ -65,7 +65,6 @@ function Home() {
                 <span className="home-eyebrow">Destaques para você</span>
                 <h2 id="products-title">Tecnologia que combina com o seu dia</h2>
               </div>
-              <p>Uma seleção para trabalhar melhor, estudar com foco e jogar no máximo.</p>
             </div>
             <div className="home-products">
               <ProductCard variant="home" />
@@ -85,6 +84,8 @@ function Home() {
           </div>
         </section>
       </main>
+
+      <BackToTopButton/>
 
       <SiteFooter />
     </div>

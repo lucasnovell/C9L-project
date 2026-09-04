@@ -2,6 +2,14 @@ import { Link } from "react-router-dom";
 
 import "./style.css";
 
+
+const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+
 function SiteFooter() {
   return (
     <footer className="site-footer">
@@ -14,7 +22,7 @@ function SiteFooter() {
           <p>Tecnologia para acompanhar todos os seus ritmos.</p>
         </div>
         <nav aria-label="Links institucionais">
-          <Link to="/">Início</Link>
+          <Link onClick={scrollToTop}>Início</Link>
           <Link to="/busca?q=notebook">Notebooks</Link>
           <Link to="/busca?q=gamer">Games</Link>
           <Link to="/cart">Carrinho</Link>

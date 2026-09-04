@@ -96,7 +96,6 @@ function Cart() {
             <h1 className="page-title">Seu carrinho</h1>
             <p>{itemCount} {itemCount === 1 ? "item" : "itens"} na sua seleção</p>
           </div>
-          <strong>{formatPrice(cart.total)}</strong>
         </header>
 
         {location.state?.successMessage && <p className="cart-alert cart-alert--success" role="status">{location.state.successMessage}</p>}

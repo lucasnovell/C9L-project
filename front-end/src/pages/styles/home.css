@@ -61,7 +61,7 @@
 }
 
 .home-categories,
-.home-products-section { padding: clamp(4rem, 8vw, 7rem) 0; }
+.home-products-section { padding: clamp(4rem, 8vw, 4rem) 0; }
 .home-products-section { padding-top: 0; }
 
 .home-section-heading {
