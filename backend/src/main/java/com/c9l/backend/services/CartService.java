@@ -104,7 +104,7 @@ public class CartService {
     	User user = userService.getAuthenticatedUser();
     	
     	Cart cart = cartRepository.findByUser(user)
-    			.orElseThrow(() -> new RuntimeException("Cart not found"));
+                .orElseGet(Cart::new);
     	
     	return new CartDTO(cart);
     }
