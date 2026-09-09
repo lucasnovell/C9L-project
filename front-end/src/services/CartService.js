@@ -7,7 +7,7 @@ export async function getCart() {
         throw new Error("Usuário não autenticado.");
     }
 
-    const response = await fetch("http://localhost:8080/cart", {
+    const response = await fetch("https://c9l-project.onrender.com/cart", {
         headers: {
             Authorization: `Bearer ${token}`
         }
@@ -27,7 +27,7 @@ export async function addCartItem(productId, quantity = 1) {
         throw new Error("Usuário não autenticado.");
     }
 
-    const response = await fetch("http://localhost:8080/cart/items", {
+    const response = await fetch("https://c9l-project.onrender.com/cart/items", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -55,7 +55,7 @@ export async function deleteCartItem(id) {
         throw new Error("Usuário não autenticado.");
     }
 
-    const response = await fetch(`http://localhost:8080/cart/${id}`, {
+    const response = await fetch(`https://c9l-project.onrender.com/cart/${id}`, {
         method: "DELETE",
         headers: {
             Authorization: `Bearer ${token}`
@@ -79,7 +79,7 @@ export async function updateCartItemQuantity(id, quantity) {
         throw new Error("Usuário não autenticado.");
     }
 
-    const response = await fetch(`http://localhost:8080/cart/${id}`, {
+    const response = await fetch(`https://c9l-project.onrender.com/cart/${id}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",

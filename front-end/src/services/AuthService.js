@@ -1,7 +1,7 @@
 
 export async function register(user) {
 
-    const response = await fetch("http://localhost:8080/user/register", {
+    const response = await fetch("https://c9l-project.onrender.com/user/register", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -17,7 +17,7 @@ export async function register(user) {
 }
 
 export async function login(user){
-    const response = await fetch("http://localhost:8080/auth/login",
+    const response = await fetch("https://c9l-project.onrender.com/auth/login",
         {
             method: "POST",
             headers: {
@@ -51,7 +51,7 @@ export async function getLoggedUser() {
         throw new Error("Usuário não autenticado.");
     }
 
-    const response = await fetch("http://localhost:8080/auth/me", {
+    const response = await fetch("https://c9l-project.onrender.com/auth/me", {
         headers: {
             Authorization: `Bearer ${token}`
         }
