@@ -1,4 +1,5 @@
 import { getToken, removeToken } from "./AuthService";
+import API_URL from "./API";
 
 export async function checkout() {
     const token = getToken();
@@ -7,7 +8,7 @@ export async function checkout() {
         throw new Error("Usuário não autenticado.");
     }
 
-    const response = await fetch("https://c9l-project.onrender.com/orders", {
+    const response = await fetch(`${API_URL}/orders`, {
         method: "POST",
         headers: {
             Authorization: `Bearer ${token}`

@@ -1,4 +1,4 @@
-const API_URL = process.env.REACT_APP_API_URL || "https://c9l-project.onrender.com";
+import API_URL from "./API";
 
 async function requestProducts(path, errorMessage) {
     let response;
