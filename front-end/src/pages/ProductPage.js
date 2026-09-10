@@ -6,6 +6,7 @@ import { addCartItem } from "../services/CartService";
 import Navigation from "../components/navigation";
 import Button from "../components/button";
 import SiteFooter from "../components/footer";
+import { useToast } from "../components/toast/ToastProvider";
 
 import "./styles/productPage.css";
 
@@ -21,6 +22,7 @@ function ProductPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [addingToCart, setAddingToCart] = useState(false);
+  const showToast = useToast();
 
   useEffect(() => {
     async function loadProduct() {
@@ -41,9 +43,9 @@ function ProductPage() {
     try {
       setAddingToCart(true);
       await addCartItem(product.id, 1);
-      alert("Produto adicionado ao carrinho.");
+      showToast("Produto adicionado ao carrinho.", "success");
     } catch (requestError) {
-      alert(requestError.message);
+      showToast(requestError.message, requestError.message === "Usuário não autenticado." ? "auth" : "error");
       if (requestError.message === "Sua sessão expirou. Faça login novamente.") navigate("/login");
     } finally {
       setAddingToCart(false);

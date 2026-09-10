@@ -89,7 +89,7 @@ html { scroll-behavior: smooth; }
 
 body {
     width: 100%;
-    min-width: 20rem;
+    min-width: 0;
     min-height: 100vh;
     color: var(--color-ink);
     background: var(--color-surface-subtle);

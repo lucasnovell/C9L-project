@@ -5,11 +5,13 @@ import Navigation from "../components/navigation";
 import ButtonSubmit from "../components/buttonSubmit";
 import InputCadastro from "../components/inputCadastro";
 import { checkout } from "../services/OrderService";
+import { useToast } from "../components/toast/ToastProvider";
 
 import "./styles/checkout.css";
 
 function Checkout() {
   const navigate = useNavigate();
+  const showToast = useToast();
   const [street, setStreet] = useState("");
   const [number, setNumber] = useState("");
   const [complement, setComplement] = useState("");
@@ -22,7 +24,7 @@ function Checkout() {
     event.preventDefault();
 
     if (!street.trim() || !number.trim() || !zipCode.trim() || !paymentMethod) {
-      alert("Preencha todos os campos obrigatórios para finalizar a compra.");
+      showToast("Preencha todos os campos obrigatórios para finalizar a compra.");
       return;
     }
 
@@ -37,7 +39,7 @@ function Checkout() {
       setPaymentMethod("");
       navigate("/cart", { state: { successMessage: "Compra realizada com sucesso!" } });
     } catch (error) {
-      alert(error.message);
+      showToast(error.message);
       if (error.message === "Sua sessão expirou. Faça login novamente.") navigate("/login");
     } finally {
       setFinishingPurchase(false);

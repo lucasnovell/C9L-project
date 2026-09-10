@@ -1,9 +1,10 @@
 import './style.css'
 
-function InputSearch({ value, onChange, onFocus, placeholder = "Buscar produto", ariaLabel = "Buscar produto" }) {
+function InputSearch({ value, onChange, onFocus, inputRef, placeholder = "Buscar produto", ariaLabel = "Buscar produto" }) {
   return (
       <input
         className="input-search"
+        ref={inputRef}
         type="search"
         id="search"
         placeholder={placeholder}

@@ -8,6 +8,7 @@ import ProductPage from "./pages/ProductPage";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import SearchResults from "./pages/SearchResults";
+import { ToastProvider } from "./components/toast/ToastProvider";
 
 import "./style.css"
 import "./reset.css"
@@ -15,15 +16,17 @@ import "./reset.css"
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/cadastro" element={<Cadastro />} />
-        <Route path="/produto/:id" element={<ProductPage />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/checkout" element={<Checkout />} />
-        <Route path="/busca" element={<SearchResults />} />
-      </Routes>
+      <ToastProvider>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/cadastro" element={<Cadastro />} />
+          <Route path="/produto/:id" element={<ProductPage />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/busca" element={<SearchResults />} />
+        </Routes>
+      </ToastProvider>
     </BrowserRouter>
   );
 }

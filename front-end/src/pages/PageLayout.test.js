@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react";
 
 import Home from "./Home";
 import Login from "./Login";
+import { ToastProvider } from "../components/toast/ToastProvider";
 
 jest.mock("react-router-dom", () => ({
   Link: ({ children, to, ...props }) => <a href={to} {...props}>{children}</a>,
@@ -12,7 +13,7 @@ jest.mock("../components/productCard", () => () => <div data-testid="product-gri
 jest.mock("../components/footer", () => () => <footer />);
 
 function renderWithRouter(component) {
-  return render(component);
+  return render(<ToastProvider>{component}</ToastProvider>);
 }
 
 test("home usa somente o banner promocional no topo", () => {
